@@ -7,6 +7,7 @@ import io.github.retrooper.packetevents.packetwrappers.WrappedPacket;
 import me.tim.YeCheatPlus;
 import me.tim.checks.Check;
 import me.tim.utils.PlayerData;
+import org.bukkit.Material;
 
 public class NoFall extends Check {
     public NoFall() {
@@ -22,7 +23,7 @@ public class NoFall extends Check {
             WrappedPacket wrappedPacket = new WrappedPacket(event.getNMSPacket());
             PlayerData data = YeCheatPlus.getInstance().playerData;
 
-            if (data.airTicks >= 4 && (data.realGround != data.clientGround))
+            if (data.airTicks >= 4 && (data.realGround != data.clientGround) && data.blockUnderPlayer(event.getPlayer()) != Material.STATIONARY_WATER)
             {
                 this.fail(event.getPlayer());
             }

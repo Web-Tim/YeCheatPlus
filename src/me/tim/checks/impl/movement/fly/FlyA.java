@@ -7,6 +7,7 @@ import io.github.retrooper.packetevents.packetwrappers.WrappedPacket;
 import me.tim.YeCheatPlus;
 import me.tim.checks.Check;
 import me.tim.utils.PlayerData;
+import org.bukkit.GameMode;
 
 public class FlyA extends Check {
 
@@ -19,6 +20,7 @@ public class FlyA extends Check {
         if (!(e instanceof PacketPlayReceiveEvent)) return;
         PacketPlayReceiveEvent event = (PacketPlayReceiveEvent) e;
 
+        if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if (event.getPacketId() == PacketType.Play.Client.POSITION || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK)
         {
             WrappedPacket wrappedPacket = new WrappedPacket(event.getNMSPacket());

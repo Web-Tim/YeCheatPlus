@@ -66,4 +66,8 @@ public class Check extends PacketListenerAbstract {
     public int getVl() {
         return vl;
     }
+
+    public void setVl(int vl) {
+        this.vl = vl;
+    }
 }

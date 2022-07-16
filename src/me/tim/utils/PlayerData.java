@@ -117,4 +117,10 @@ public class PlayerData {
         }
         return yDiff - 1E-3;
     }
+
+    public Material blockUnderPlayer(Player p)
+    {
+        Location loc = new Location(p.getWorld(), this.posX, this.posY - 1, this.posZ);
+        return loc.getBlock().getType();
+    }
 }

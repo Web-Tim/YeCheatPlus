@@ -10,7 +10,7 @@ public class Timer {
 
     public boolean hasTimePassed(long time)
     {
-        return (System.currentTimeMillis() - this.startTime) >= time;
+        return (System.currentTimeMillis() - this.startTime) < time;
     }
 
     public void reset()

@@ -74,6 +74,7 @@ public class PacketHandler extends PacketListenerAbstract {
 
             if (check.isPunishable() && check.getVl() == check.getMaxVL() && event instanceof PacketPlayReceiveEvent) {
                 this.sendPacket(((PacketPlayReceiveEvent) event).getPlayer(), new WrappedPacketOutKickDisconnect("Unfair advantage!"));
+                check.setVl(0);
             }
         }
     }
