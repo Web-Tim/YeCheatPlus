@@ -3,11 +3,8 @@ package me.tim.utils;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.WrappedPacket;
-import net.minecraft.server.v1_8_R3.BlockAir;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -18,6 +15,8 @@ public class PlayerData {
     public double posX, lastPosX, motionX;
     public double posY, lastPosY, motionY;
     public double posZ, lastPosZ, motionZ;
+    public float moveStrafing, moveForward;
+
     public float yaw, lastYaw, yawChange;
     public float pitch, lastPitch, pitchChange;
 
@@ -32,6 +31,7 @@ public class PlayerData {
             case PacketType.Play.Client.POSITION:
                 this.setPosition(packet.readDouble(0), packet.readDouble(1), packet.readDouble(2));
                 this.updateLastPos();
+                this.updateInput();
                 this.clientGround = packet.readBoolean(0);
                 this.realGround = this.getRealGround();
                 break;
@@ -40,6 +40,7 @@ public class PlayerData {
                 this.setRotation(packet.readFloat(0), packet.readFloat(1));
                 this.updateLastPos();
                 this.updateLastAngles();
+                this.updateInput();
                 this.clientGround = packet.readBoolean(0);
                 this.realGround = this.getRealGround();
                 break;
@@ -69,6 +70,11 @@ public class PlayerData {
             this.lastPitch = this.pitch;
             this.rotTick = 0;
         }
+    }
+
+    private void updateInput()
+    {
+
     }
 
     private void setPosition(double posX, double posY, double posZ)

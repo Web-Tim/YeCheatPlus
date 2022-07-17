@@ -1,9 +1,11 @@
 package me.tim.utils.player;
 
+import me.tim.YeCheatPlus;
 import me.tim.utils.io.Vec2;
 import me.tim.utils.io.Vec3;
 import me.tim.utils.mc.AxisAlignedBB;
 import net.minecraft.server.v1_8_R3.MovingObjectPosition;
+import net.minecraft.server.v1_8_R3.Vec3D;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -13,23 +15,56 @@ public class Rotation {
     private float lastYaw, lastPitch, yaw, pitch;
     private double lastPosX, lastPosY, lastPosZ, posX, posY, posZ;
 
-    public Rotation(Vec3 position, Vec3 lastPosition, Vec2 rotation, Vec2 lastRotation) {
-        this.posX = position.xCoord;
-        this.posY = position.yCoord;
-        this.posZ = position.zCoord;
-        this.lastPosX = lastPosition.xCoord;
-        this.lastPosY = lastPosition.yCoord;
-        this.lastPosZ = lastPosition.zCoord;
+    public Rotation() {
+        this.posX = YeCheatPlus.getInstance().playerData.posX;
+        this.posY = YeCheatPlus.getInstance().playerData.posY;
+        this.posZ = YeCheatPlus.getInstance().playerData.posZ;
+        this.lastPosX = YeCheatPlus.getInstance().playerData.lastPosX;
+        this.lastPosY = YeCheatPlus.getInstance().playerData.lastPosY;
+        this.lastPosZ = YeCheatPlus.getInstance().playerData.lastPosZ;
 
-        this.yaw = rotation.yaw;
-        this.pitch = rotation.pitch;
-        this.lastYaw = lastRotation.yaw;
-        this.lastPitch = lastRotation.pitch;
+        this.yaw = YeCheatPlus.getInstance().playerData.yaw;
+        this.pitch = YeCheatPlus.getInstance().playerData.pitch;
+        this.lastYaw = YeCheatPlus.getInstance().playerData.lastYaw;
+        this.lastPitch = YeCheatPlus.getInstance().playerData.lastPitch;
+    }
+
+    public void update()
+    {
+        this.posX = YeCheatPlus.getInstance().playerData.posX;
+        this.posY = YeCheatPlus.getInstance().playerData.posY;
+        this.posZ = YeCheatPlus.getInstance().playerData.posZ;
+        this.lastPosX = YeCheatPlus.getInstance().playerData.lastPosX;
+        this.lastPosY = YeCheatPlus.getInstance().playerData.lastPosY;
+        this.lastPosZ = YeCheatPlus.getInstance().playerData.lastPosZ;
+
+        this.yaw = YeCheatPlus.getInstance().playerData.yaw;
+        this.pitch = YeCheatPlus.getInstance().playerData.pitch;
+        this.lastYaw = YeCheatPlus.getInstance().playerData.lastYaw;
+        this.lastPitch = YeCheatPlus.getInstance().playerData.lastPitch;
     }
 
     public float getSentYaw()
     {
         return this.yaw % 360;
+    }
+
+    public float getLastSentYaw()
+    {
+        return this.lastYaw % 360;
+    }
+
+    //SOON...
+    public Vec2 gcdPrediction(float mouseSensitivity)
+    {
+        float s = mouseSensitivity * 0.6F + 0.2F;
+        float gcd = s * s * s * 1.2F;
+        float gcdYaw = this.getSentYaw() - this.getLastSentYaw();
+        gcdYaw -= gcdYaw % gcd;
+
+        float gcdPitch = this.pitch - this.lastPitch;
+        gcdPitch -= gcdPitch % gcd;
+        return new Vec2(gcdYaw, gcdPitch);
     }
 
     public boolean rayCastPassed(CraftEntity target, double range)
@@ -46,6 +81,11 @@ public class Rotation {
 
         MovingObjectPosition movingObjectPosition = axisalignedbb.calculateIntercept(vec3, vec32);
         return movingObjectPosition != null;
+    }
+
+    public boolean canEntityBeSeen(CraftPlayer player, CraftEntity target)
+    {
+        return player.getHandle().world.rayTrace(new Vec3D(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ), new Vec3D(target.getHandle().locX, target.getHandle().locY + (double)target.getHandle().getHeadHeight(), target.getHandle().locZ)) == null;
     }
 
     public Vec3 getLook(float partialTicks)

@@ -13,6 +13,7 @@ import me.tim.utils.packet.enums.EntityAction;
 import me.tim.utils.player.Rotation;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 
 public class KillAuraC extends Check {
@@ -28,8 +29,9 @@ public class KillAuraC extends Check {
         if (event.getPacketId() == PacketType.Play.Client.USE_ENTITY) {
             WrappedPacket packet = new WrappedPacket(event.getNMSPacket());
             if (this.getPacketUtil().readEnum(packet, 1).equals(EntityAction.ATTACK.name())) {
-                PlayerData data = YeCheatPlus.getInstance().playerData;
-                Rotation rotation = new Rotation(new Vec3(data.posX, data.posY, data.posZ), new Vec3(data.lastPosX, data.lastPosY, data.lastPosZ), new Vec2(data.yaw, data.pitch), new Vec2(data.lastYaw, data.lastPitch));
+                Rotation rotation = new Rotation();
+                rotation.update();
+
                 CraftEntity target = null;
                 for (Entity entity : ((CraftWorld)event.getPlayer().getWorld()).getHandle().getWorld().getEntities())
                 {
@@ -39,7 +41,7 @@ public class KillAuraC extends Check {
                     }
                 }
 
-                if (target != null && !rotation.rayCastPassed(target, 7))
+                if (target != null && (!rotation.rayCastPassed(target, 7) || !rotation.canEntityBeSeen(((CraftPlayer)event.getPlayer()), target)))
                 {
                     this.fail(event.getPlayer());
                 }

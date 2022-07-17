@@ -3,6 +3,7 @@ package me.tim.checks;
 import io.github.retrooper.packetevents.event.PacketEvent;
 import me.tim.YeCheatPlus;
 import me.tim.utils.Timer;
+import me.tim.utils.io.MathUtil;
 import me.tim.utils.packet.PacketUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,6 +15,7 @@ public class Check {
     private boolean punishable;
 
     private PacketUtil packetUtil;
+    private MathUtil mathUtil;
 
     public Check(String name, int maxVL, boolean punishable)
     {
@@ -22,6 +24,7 @@ public class Check {
         this.punishable = punishable;
         this.vlTimer = new Timer();
         this.packetUtil = new PacketUtil(YeCheatPlus.getInstance().packetEvents);
+        this.mathUtil = new MathUtil();
     }
 
     public void onPacket(PacketEvent event) { }
@@ -69,5 +72,8 @@ public class Check {
 
     public PacketUtil getPacketUtil() {
         return packetUtil;
+    }
+    public MathUtil getMathUtil() {
+        return mathUtil;
     }
 }
