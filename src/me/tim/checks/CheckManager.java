@@ -4,6 +4,7 @@ import me.tim.checks.impl.combat.NoSwingA;
 import me.tim.checks.impl.combat.killaura.KillAuraA;
 import me.tim.checks.impl.combat.killaura.KillAuraB;
 import me.tim.checks.impl.combat.killaura.KillAuraC;
+import me.tim.checks.impl.combat.killaura.KillAuraD;
 import me.tim.checks.impl.movement.NoFall;
 import me.tim.checks.impl.movement.fly.FlyA;
 
@@ -19,6 +20,7 @@ public class CheckManager {
         this.checks.add(new KillAuraA());
         this.checks.add(new KillAuraB());
         this.checks.add(new KillAuraC());
+        this.checks.add(new KillAuraD());
 
         //Fly
         this.checks.add(new FlyA());
