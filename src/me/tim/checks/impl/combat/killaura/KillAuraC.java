@@ -11,16 +11,13 @@ import me.tim.utils.io.Vec2;
 import me.tim.utils.io.Vec3;
 import me.tim.utils.packet.enums.EntityAction;
 import me.tim.utils.player.Rotation;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 
 public class KillAuraC extends Check {
     public KillAuraC() {
-        super("KillAura (C)", 200, true);
+        super("KillAura (C)", 15, true);
     }
 
     @Override

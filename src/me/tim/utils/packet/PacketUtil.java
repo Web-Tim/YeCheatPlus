@@ -29,6 +29,11 @@ public class PacketUtil {
         return id == PacketType.Play.Client.POSITION_LOOK || id == PacketType.Play.Client.POSITION;
     }
 
+    public boolean wasInventoryOpened(int id)
+    {
+        return id == PacketType.Play.Client.CLOSE_WINDOW;
+    }
+
     // Important: Uses readAnyObject method
     public String readEnum(WrappedPacket packet, int id)
     {

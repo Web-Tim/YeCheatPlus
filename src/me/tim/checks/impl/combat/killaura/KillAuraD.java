@@ -5,7 +5,6 @@ import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.WrappedPacket;
 import me.tim.checks.Check;
-import me.tim.utils.Timer;
 import me.tim.utils.packet.enums.EntityAction;
 import org.bukkit.entity.Entity;
 
