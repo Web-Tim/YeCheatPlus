@@ -1,4 +1,4 @@
-package me.tim.packets.impl;
+package me.tim.utils.packet.enums;
 
 public enum ClientCommands {
     START_SNEAKING(0),

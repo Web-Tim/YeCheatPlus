@@ -73,16 +73,9 @@ public class PacketHandler extends PacketListenerAbstract {
             check.onPacket(event);
 
             if (check.isPunishable() && check.getVl() == check.getMaxVL() && event instanceof PacketPlayReceiveEvent) {
-                this.sendPacket(((PacketPlayReceiveEvent) event).getPlayer(), new WrappedPacketOutKickDisconnect("Unfair advantage!"));
+                check.getPacketUtil().sendPacket(((PacketPlayReceiveEvent) event).getPlayer(), new WrappedPacketOutKickDisconnect("Unfair advantage!"));
                 check.setVl(0);
             }
         }
-    }
-
-    public void sendPacket(Player player, SendableWrapper wPacket)
-    {
-        if (wPacket == null || YeCheatPlus.getInstance().packetEvents == null || player == null) return;
-
-        YeCheatPlus.getInstance().packetEvents.getPlayerUtils().sendPacket(player, wPacket);
     }
 }

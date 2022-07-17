@@ -8,6 +8,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class PlayerData {
@@ -105,6 +107,28 @@ public class PlayerData {
     private boolean getRealGround()
     {
         return this.posY % 1 / 64. < 1E-4;
+    }
+
+    /**
+     * Returns the distance to the entity. Args: entity
+     */
+    public double getDistanceToEntity(Entity entityIn)
+    {
+        float f = (float)(this.posX - ((CraftEntity)entityIn).getHandle().locX);
+        float f1 = (float)(this.posY - ((CraftEntity)entityIn).getHandle().locY);
+        float f2 = (float)(this.posZ - ((CraftEntity)entityIn).getHandle().locZ);
+        return Math.sqrt(f * f + f1 * f1 + f2 * f2);
+    }
+
+    /**
+     * Gets the squared distance to the position. Args: x, y, z
+     */
+    public double getDistanceSq(double x, double y, double z)
+    {
+        double d0 = this.posX - x;
+        double d1 = this.posY - y;
+        double d2 = this.posZ - z;
+        return d0 * d0 + d1 * d1 + d2 * d2;
     }
 
     public double getDistanceToGround(Player p)

@@ -1,18 +1,19 @@
 package me.tim.checks;
 
 import io.github.retrooper.packetevents.event.PacketEvent;
-import io.github.retrooper.packetevents.event.PacketListenerAbstract;
-import io.github.retrooper.packetevents.packetwrappers.api.SendableWrapper;
 import me.tim.YeCheatPlus;
 import me.tim.utils.Timer;
+import me.tim.utils.packet.PacketUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class Check extends PacketListenerAbstract {
+public class Check {
     private String name;
     private int vl, maxVL;
     private Timer vlTimer;
     private boolean punishable;
+
+    private PacketUtil packetUtil;
 
     public Check(String name, int maxVL, boolean punishable)
     {
@@ -20,6 +21,7 @@ public class Check extends PacketListenerAbstract {
         this.maxVL = maxVL;
         this.punishable = punishable;
         this.vlTimer = new Timer();
+        this.packetUtil = new PacketUtil(YeCheatPlus.getInstance().packetEvents);
     }
 
     public void onPacket(PacketEvent event) { }
@@ -45,12 +47,6 @@ public class Check extends PacketListenerAbstract {
         }
     }
 
-    public void sendPacket(SendableWrapper packet, Player p)
-    {
-        YeCheatPlus.getInstance().packetHandler.sendPacket(p, packet);
-    }
-
-
     public boolean isPunishable() {
         return punishable;
     }
@@ -69,5 +65,9 @@ public class Check extends PacketListenerAbstract {
 
     public void setVl(int vl) {
         this.vl = vl;
+    }
+
+    public PacketUtil getPacketUtil() {
+        return packetUtil;
     }
 }

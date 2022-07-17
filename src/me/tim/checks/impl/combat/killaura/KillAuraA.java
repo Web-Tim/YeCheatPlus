@@ -2,7 +2,6 @@ package me.tim.checks.impl.combat.killaura;
 
 import io.github.retrooper.packetevents.event.PacketEvent;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
-import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.WrappedPacket;
 import me.tim.checks.Check;
 
@@ -16,7 +15,7 @@ public class KillAuraA extends Check {
         if (!(e instanceof PacketPlayReceiveEvent)) return;
         PacketPlayReceiveEvent event = (PacketPlayReceiveEvent) e;
 
-        if (event.getPacketId() == PacketType.Play.Client.LOOK || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK) {
+        if (this.getPacketUtil().isRotationPacket(event.getPacketId())) {
             WrappedPacket packet = new WrappedPacket(event.getNMSPacket());
             float pitch = packet.readFloat(1);
 

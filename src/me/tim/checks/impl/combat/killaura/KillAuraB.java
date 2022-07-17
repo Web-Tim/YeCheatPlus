@@ -19,11 +19,9 @@ public class KillAuraB extends Check {
         if (!(e instanceof PacketPlayReceiveEvent)) return;
         PacketPlayReceiveEvent event = (PacketPlayReceiveEvent) e;
 
-        if (event.getPacketId() == PacketType.Play.Client.LOOK || event.getPacketId() == PacketType.Play.Client.POSITION_LOOK || event.getPacketId() == PacketType.Play.Client.FLYING || event.getPacketId() == PacketType.Play.Client.POSITION) {
+        if (this.getPacketUtil().isRotationPacket(event.getPacketId()) || this.getPacketUtil().isPositionPacket(event.getPacketId()) || event.getPacketId() == PacketType.Play.Client.FLYING) {
             this.lookTimer.reset();
-        }else
-            if (event.getPacketId() == PacketType.Play.Client.USE_ENTITY && this.lookTimer.hasTimePassed(10))
-        {
+        }else if (event.getPacketId() == PacketType.Play.Client.USE_ENTITY && this.lookTimer.hasTimePassed(10)) {
             this.fail(event.getPlayer());
         }
     }
