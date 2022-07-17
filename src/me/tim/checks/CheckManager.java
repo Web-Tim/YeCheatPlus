@@ -1,6 +1,6 @@
 package me.tim.checks;
 
-import me.tim.checks.impl.combat.NoSwingA;
+import me.tim.checks.impl.combat.NoSwing;
 import me.tim.checks.impl.combat.killaura.*;
 import me.tim.checks.impl.movement.NoFall;
 import me.tim.checks.impl.movement.fly.FlyA;
@@ -25,7 +25,7 @@ public class CheckManager {
 
         //Other
         this.checks.add(new NoFall());
-        this.checks.add(new NoSwingA());
+        this.checks.add(new NoSwing());
     }
 
     public ArrayList<Check> getChecks() {

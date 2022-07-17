@@ -10,11 +10,11 @@ import me.tim.utils.packet.enums.EntityAction;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class NoSwingA extends Check {
+public class NoSwing extends Check {
     private ArrayList<Byte> packetIDs;
 
-    public NoSwingA() {
-        super("NoSwing (A)", 15, true);
+    public NoSwing() {
+        super("NoSwing", 15, true);
         this.packetIDs = new ArrayList<>();
     }
 
@@ -24,12 +24,16 @@ public class NoSwingA extends Check {
         PacketPlayReceiveEvent event = (PacketPlayReceiveEvent) e;
         this.packetIDs.add(event.getPacketId());
 
-        if (event.getPacketId() == PacketType.Play.Client.USE_ENTITY) {
-            if (this.packetIDs.get(this.packetIDs.size() - 2) != PacketType.Play.Client.ARM_ANIMATION && Objects.equals(this.getPacketUtil().readEnum(new WrappedPacket(event.getNMSPacket()), 1), EntityAction.ATTACK.toString()))
-            {
-                this.fail(event.getPlayer());
-                this.packetIDs.clear();
-            }
+        switch (event.getPacketId())
+        {
+            case PacketType.Play.Client.USE_ENTITY:
+                if (this.packetIDs.get(this.packetIDs.size() - 2) != PacketType.Play.Client.ARM_ANIMATION && Objects.equals(this.getPacketUtil().readEnum(new WrappedPacket(event.getNMSPacket()), 1), EntityAction.ATTACK.toString()))
+                {
+                    this.fail(event.getPlayer());
+                    this.packetIDs.clear();
+                }
+                break;
+            //TODO: BlockPlace NoSwing detection
         }
     }
 }
